@@ -1,10 +1,27 @@
 import express from 'express';
-import { ApolloServer } from 'apollo-server-express';
+import ApolloServer from './utils/ase.cjs';
+import cors from 'cors';
 
 const app = express();
+app.use(cors());
 
-const schema = ...
-const resolvers = ...
+const schema = `
+  type Query {
+    me: User
+  }
+  type User {
+    username: String!
+  }
+  `;
+const resolvers = {
+  Query: {
+    me: () => {
+      return {
+        username: 'Gerald Michelant',
+      };
+    },
+  },
+};
 
 const server = new ApolloServer({
   typeDefs: schema,
