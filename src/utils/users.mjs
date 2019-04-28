@@ -9,6 +9,4 @@ let users = {
   },
 };
 
-const me = users[1];
-
-export { users, me}
+export { users }

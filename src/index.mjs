@@ -1,7 +1,7 @@
 import express from 'express';
 import ApolloServer from './utils/ase.cjs';
 import cors from 'cors';
-import {users, me } from './utils/users.mjs'
+import { users } from './utils/users.mjs'
 
 const app = express();
 app.use(cors());
@@ -19,21 +19,29 @@ const schema = `
   `;
 const resolvers = {
   Query: {
-    me: () => {
-      return me
+    me: (parent, args, { me }) => {
+      return me;
     },
     users: () => {
       return Object.values(users);
     },
     user: (parent, { id }) => {
       return users[id];
+    },
   },
-}
+  User: {
+    username: parent => {
+      return parent.username;
+    }
+  },
 };
 
 const server = new ApolloServer({
   typeDefs: schema,
   resolvers,
+  context: {
+    me: users[1],
+  },
 });
 
 server.applyMiddleware({ app, path: '/graphql' });
