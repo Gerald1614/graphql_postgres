@@ -1,7 +1,7 @@
 import express from 'express';
 import ApolloServer from './utils/ase.cjs';
 import cors from 'cors';
-import { users } from './utils/users.mjs'
+import { users, messages } from './utils/users.mjs'
 
 const app = express();
 app.use(cors());
@@ -11,10 +11,18 @@ const schema = `
     me: User
     users: [User!]
     user(id: ID!): User
+    messages: [Message!]!
+    message(id: ID!): Message!
   }
   type User {
     id: ID!
     username: String!
+    messages: [Message!]
+  }
+  type Message {
+    id: ID!
+    text: String!
+    user: User!
   }
   `;
 const resolvers = {
@@ -28,11 +36,24 @@ const resolvers = {
     user: (parent, { id }) => {
       return users[id];
     },
+    messages: () => {
+      return Object.values(messages);
+    },
+    message: (parent, { id }) => {
+      return messages[id];
+    },
   },
   User: {
-    username: parent => {
-      return parent.username;
-    }
+    messages: user => {
+      return Object.values(messages).filter(
+        message => message.userId === user.id,
+      );
+    },
+  },
+  Message: {
+    user: message => {
+      return users[message.userId];
+    },
   },
 };
 
