@@ -5,18 +5,21 @@
   "type": "module",
   "module": "index.mjs",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon --experimental-modules ./src/index.mjs",
-    "start": "NODE_ENV=production node --experimental-modules ./src/index.mjs"
+    "dev": "NODE_ENV=development nodemon -r dotenv/config  --experimental-modules ./src/index.mjs",
+    "start": "NODE_ENV=production  node -r dotenv/config --experimental-modules ./src/index.mjs"
   },
   "license": "MIT",
   "dependencies": {
     "apollo-server": "^2.4.8",
     "apollo-server-express": "^2.4.8",
     "cors": "^2.8.5",
+    "dotenv": "^7.0.0",
     "eslint": "^5.16.0",
     "express": "^4.16.4",
     "graphql": "^14.2.1",
     "nodemon": "^1.18.11",
+    "pg": "^7.10.0",
+    "sequelize": "^5.8.1",
     "uuid": "^3.3.2"
   }
 }

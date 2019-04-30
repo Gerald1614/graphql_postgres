@@ -3,7 +3,8 @@ import ApolloServer from './utils/ase.cjs';
 import cors from 'cors';
 import schema from './schema/index.mjs';
 import resolvers from './resolvers/index.mjs';
-import models from './models/index.mjs'
+import models, { sequelize } from './models/index.mjs'
+
 
 const app = express();
 app.use(cors());
@@ -18,8 +19,11 @@ const server = new ApolloServer({
   },
 });
 
+
 server.applyMiddleware({ app, path: '/graphql' });
 
-app.listen({ port: 8000 }, () => {
-  console.log('Apollo Server on http://localhost:8000/graphql');
+sequelize.sync().then(async () => {
+  app.listen({ port: 8000 }, () => {
+    console.log('Apollo Server on http://localhost:8000/graphql');
+  });
 });
