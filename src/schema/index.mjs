@@ -1,26 +1,18 @@
-export default `
+import userSchema from './user.mjs';
+import messageSchema from './message.mjs';
+
+const linkSchema = `
   type Query {
-    me: User
-    users: [User!]
-    user(id: ID!): User
-
-    messages: [Message!]!
-    message(id: ID!): Message!
+    _: Boolean
   }
-  
+
   type Mutation {
-    createMessage(text: String!): Message!
-    deleteMessage(id: ID!): Boolean!
-  }
-  type User {
-    id: ID!
-    username: String!
-    messages: [Message!]
-  }
-  type Message {
-    id: ID!
-    text: String!
-    user: User!
+    _: Boolean
   }
 
-  `;
+  type Subscription {
+    _: Boolean
+  }
+`;
+
+export default [linkSchema, userSchema, messageSchema];
