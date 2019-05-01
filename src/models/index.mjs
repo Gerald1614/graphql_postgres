@@ -1,13 +1,5 @@
-import Sequelize from 'sequelize';
 
-const sequelize = new Sequelize(
-  process.env.DATABASE,
-  process.env.DATABASE_USER,
-  process.env.DATABASE_PASSWORD,
-  {
-    dialect: 'postgres',
-  },
-);
+
 const models = {
   User: sequelize.import('/Users/gmichelant/Documents/graphql_postgres/src/models/user.mjs'),
   Message: sequelize.import('/Users/gmichelant/Documents/graphql_postgres/src/models/message.mjs'),
@@ -19,5 +11,4 @@ Object.keys(models).forEach(key => {
   }
 });
 
-export { sequelize };
 export default models;
