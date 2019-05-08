@@ -3,7 +3,7 @@ import ApolloServer from './utils/ase.cjs';
 import cors from 'cors';
 import schema from './schema/index.mjs';
 import resolvers from './resolvers/index.mjs';
-// import models from './models/index.mjs'
+ import models from './models/index.mjs'
 import db from './db/index.mjs'
 
 
@@ -14,20 +14,13 @@ app.use(cors());
 const server = new ApolloServer({
   typeDefs: schema,
   resolvers,
-  // context: {
-  //   models,
-  //   me: models.users[1],
-  // },
+  context: {
+    models,
+    me: models.users[1],
+  },
 });
 
-
 server.applyMiddleware({ app, path: '/graphql' });
-
-db.query('SELECT text, username FROM messages, users WHERE creator_id = users.id')
-    .then(res => {
-        console.log(res.rows[0]);
-    })
-    .catch(e => console.error(e.stack));
 
 app.listen({ port: 8000 }, () => {
   console.log('Apollo Server on http://localhost:8000/graphql');

@@ -1,22 +1,14 @@
 export default {
   Query: {
     users: (parent, args, { models }) => {
-      return Object.values(models.users);
+      return models.users.findAll();
     },
-    user: (parent, { id }, { models }) => {
-      return models.users[id];
+    user: async (parent, { id }, { models }) => {
+      return await (models.users).findById(id);
     },
     me: (parent, args, { me }) => {
       return me;
     }
-  },
-
-  User: {
-    messages: (user, args, { models }) => {
-      return Object.values(models.messages).filter(
-        message => message.userId === user.id,
-      );
-    },
   },
 
 }

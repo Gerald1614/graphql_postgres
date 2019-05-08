@@ -3,10 +3,10 @@ import uuidv4 from 'uuid/v4.js';
 export default {
   Query: {
     messages: (parent, args, { models }) => {
-      return Object.values(models.messages);
+      return models.messages.findAll();
     },
     message: (parent, { id }, { models }) => {
-      return models.messages[id];
+      return models.messages.findById(id);
     },
   },
 
@@ -35,12 +35,6 @@ export default {
       models.messages = otherMessages;
 
       return true;
-    },
-  },
-
-  Message: {
-    user: (message, args, { models }) => {
-      return models.users[message.userId];
     },
   },
 }
