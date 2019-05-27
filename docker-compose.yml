@@ -1,0 +1,25 @@
+version: "3"
+services:
+  app:
+    container_name: app
+    restart: always
+    command: yarn dev
+    env_file:
+      - .env
+    build: .
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    ports:
+      - "8000:8000"
+      - "5432:5432"
+
+  postgres:
+    image: postgres:11.2-alpine
+    environment:
+      POSTGRES_PASSWORD: gegeraptor
+      POSTGRES_USER: gegeraptor
+      POSTGRES_DB: graphql-node
+    # volumes:
+    #   - ~/dbdata:/var/lib/postgresql/data
