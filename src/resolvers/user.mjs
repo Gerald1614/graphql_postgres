@@ -6,7 +6,7 @@ export default {
       return models.users.findAll();
     },
     user: async (parent, { id }, { models }) => {
-      return await (models.users).findById(id);
+      return await models.users.findById(id);
     },
     me: (parent, args, { me }) => {
       return me;
