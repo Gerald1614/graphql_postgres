@@ -11,17 +11,15 @@ export default {
   },
 
   Mutation: {
-    createMessage: (parent, { text }, { me, models }) => {
+    createMessage: async (parent, { userid, text }, { models }) => {
       const id = uuidv4();
       const message = {
         id,
         text,
-        userId: me.id,
+        userid,
       };
-
-      models.messages[id] = message;
-      models.users[me.id].messageIds.push(id);
-
+      console.log(message)
+      await (models.messages).createMessage(message);
       return message;
     },
 

@@ -36,7 +36,7 @@ export async function findById(userId) {
 
 export async function createUser(user) {
   const query = {
-    text: 'INSERT INTO users("id", "username", "messages" ) VALUES($1, $2, $3)',
+    text: 'INSERT INTO users("id", "username", "messages" ) VALUES($1, $2, $3) RETURNING *',
     values: [user.id, user.username, []],
   }
   return await db.query(query)

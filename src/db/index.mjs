@@ -7,19 +7,19 @@ pool.on('connect', () => {
 });
 
 const queryText1 =
-    `CREATE TABLE IF NOT EXISTS
-      users(
-        id VARCHAR(40) PRIMARY KEY,
-        username VARCHAR(40),
-        messages VARCHAR(40)[]
-      )`;
-      const queryText2 =
-    `CREATE TABLE IF NOT EXISTS
-      messages(
-        id VARCHAR(40) PRIMARY KEY,
-        text VARCHAR(40),
-        userid VARCHAR(40)
-      )`;
+  `CREATE TABLE IF NOT EXISTS
+    users(
+      id VARCHAR(40) PRIMARY KEY,
+      username VARCHAR(40),
+      messages VARCHAR(40)[]
+    )`;
+const queryText2 =
+  `CREATE TABLE IF NOT EXISTS
+    messages(
+      id VARCHAR(40) PRIMARY KEY,
+      text VARCHAR(128),
+      userid VARCHAR(40)
+    )`;
 const createTables = (query) => {
   pool.query(query)
     .then((res) => {

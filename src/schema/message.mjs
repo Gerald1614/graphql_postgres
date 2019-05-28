@@ -5,13 +5,13 @@ export default `
   }
   
   extend type Mutation {
-    createMessage(text: String!): Message!
+    createMessage(text: String!, userid:String!): Message!
     deleteMessage(id: ID!): Boolean!
   }
 
   type Message {
     id: ID!
     text: String!
-    user: User!
+    userid: User!
   }
   `;
