@@ -37,15 +37,11 @@ export async function createMessage(message) {
   }
   return await db.query(query)
   .then(res => {
-    console.log(res)
-    // const query = {
-    //   text: 'UPDATE users SET messages = messages || VALUES($1)',
-    //   value: [message.id]
-    // }
-    // db.query(query)
-    // .then(res => {
-    //   console.log(res)
-    // } )
+    db.query('UPDATE users SET messages = messages || $1 WHERE users.id=$2 RETURNING *',['{'+message.id+'}', message.userid])
+    .then(res => {
+      console.log(res.rows[0].messages)
+    })
+    .catch(e => console.error(e.stack))
     return res.rows[0]
   } )
   .catch(e => console.error(e.stack))

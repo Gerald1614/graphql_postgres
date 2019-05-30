@@ -3,13 +3,13 @@ import db from '../db/index.mjs'
 export async function findAll() {
   return await db.query('SELECT * FROM users')
   .then(res => {
-    const users =  res.rows.map((user) => {
+    const users =  res.rows.map(async (user) => {
       const messages = user.messages
-      if (messages.length >0) {
-        db.query(`SELECT * FROM messages WHERE messages.userid = $1`,[user.id])
+      if (messages.length >=0) {
+        await db.query(`SELECT * FROM messages WHERE messages.userid = $1`,[user.id])
          .then(res => {
-           messages = res.rows
-           user.messages = messages
+           user.messages = res.rows
+           console.log(user.messages)
          })
       }
       return user
@@ -20,13 +20,14 @@ export async function findAll() {
 }
 export async function findById(userId) {
   return await db.query(`SELECT * FROM users WHERE users.id = $1`,[userId])
-  .then(res => {
-    const messages = res.rows[0].messages
+  .then(async res => {
+    let messages = res.rows[0].messages
     if (messages.length >0) {
-       db.query(`SELECT * FROM messages WHERE messages.userid = $1`,[userId])
+       await db.query(`SELECT * FROM messages WHERE messages.userid = $1`,[userId])
         .then(res => {
           messages = res.rows
         })
+        .catch(e => console.error(e.stack))
       }
       let user = {username: res.rows[0].username, id: res.rows[0].id, messages: messages }
       return user
