@@ -23,16 +23,8 @@ export default {
       return message;
     },
 
-    deleteMessage: (parent, { id }, { models }) => {
-      const { [id]: message, ...otherMessages } = models.messages;
-
-      if (!message) {
-        return false;
-      }
-
-      models.messages = otherMessages;
-
-      return true;
+    deleteMessage: async (parent, { id }, { models }) => {
+      return await (models.messages).deleteMessage(id);
     },
   },
 }

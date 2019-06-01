@@ -6,6 +6,7 @@ export default `
   }
   extend type Mutation {
     createUser(username: String!): User!
+    deleteUser(id: ID!): Boolean!
   }
   type User {
     id: ID!

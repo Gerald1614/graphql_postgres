@@ -22,6 +22,9 @@ export default {
       await (models.users).createUser(user);
       return user
     },
+    deleteUser: async (parent, { id }, { models }) => {
+      return await (models.users).deleteUser(id);
+    },
   }
 
 }
