@@ -9,6 +9,7 @@ export async function findAll() {
            user.messages = res.rows
            console.log(user.messages)
          })
+         .catch(e => user.messages=[])
       return user
     })
     return users
@@ -23,7 +24,10 @@ export async function findById(userId) {
         .then(res => {
           messages = res.rows
         })
-        .catch(e => console.error(e.stack))
+        .catch(e => {
+          console.error(e.stack)
+          return messages=[]
+          })
 
       let user = {username: res.rows[0].username, id: res.rows[0].id, messages: messages }
       return user

@@ -22,7 +22,9 @@ export default {
       await (models.messages).createMessage(message);
       return message;
     },
-
+    updateMessage: async (parent, { id, text }, { models }) => {
+      return await (models.messages).updateMessage(id, text);
+    },
     deleteMessage: async (parent, { id }, { models }) => {
       return await (models.messages).deleteMessage(id);
     },

@@ -3,7 +3,7 @@ services:
   app:
     container_name: app
     restart: always
-    command: yarn dev
+    command: yarn start --env=production
     env_file:
       - .env
     build: .

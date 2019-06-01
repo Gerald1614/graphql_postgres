@@ -12,7 +12,10 @@ export async function findAll() {
     }
       return result
   })
-  .catch(e => console.error(e.stack));
+  .catch(e => {
+    console.error(e.stack)
+    return []
+  });
 }
 
 export async function findById(messageId) {
@@ -36,6 +39,14 @@ export async function createMessage(message) {
     values: [message.id, message.text, message.userid]
   }
   return await db.query(query)
+  .then(res => {
+    return res.rows[0]
+  } )
+  .catch(e => console.error(e.stack))
+}
+
+export async function updateMessage(id, text) {
+  return await db.query('UPDATE messages SET text = $1 WHERE id = $2 RETURNING *', [text, id])
   .then(res => {
     return res.rows[0]
   } )

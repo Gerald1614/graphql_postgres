@@ -6,6 +6,7 @@ export default `
   
   extend type Mutation {
     createMessage(text: String!, userid:String!): Message!
+    updateMessage(text: String!, id: ID!): Message!
     deleteMessage(id: ID!): Boolean!
   }
 
