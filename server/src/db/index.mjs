@@ -22,7 +22,7 @@ const queryText2 =
 const createTables = (query) => {
   pool.query(query)
     .then((res) => {
-      console.log(res);
+      console.log('tables created');
     })
     .catch((err) => {
       console.log(err);
