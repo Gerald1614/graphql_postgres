@@ -1,7 +1,7 @@
 
 import * as users from './users.mjs'
-import * as messages from './messages.mjs'
+import * as creditcards from './creditcards.mjs'
   
-const models = {messages, users}
+const models = {creditcards, users}
 
 export default models;

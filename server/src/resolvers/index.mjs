@@ -1,4 +1,4 @@
 import userResolvers from './user.mjs';
-import messageResolvers from './message.mjs';
+import creditcardResolvers from './creditcard.mjs';
 
-export default [userResolvers, messageResolvers];
+export default [userResolvers, creditcardResolvers];

@@ -4,12 +4,12 @@ export async function findAll() {
   return await db.query('SELECT * FROM users')
   .then(res => {
     const users =  res.rows.map(async (user) => {
-        await db.query(`SELECT * FROM messages WHERE messages.userid = $1`,[user.id])
+        await db.query(`SELECT * FROM creditcards WHERE creditcards.userid = $1`,[user.id])
          .then(res => {
-           user.messages = res.rows
-           console.log(user.messages)
+           user.creditcards = res.rows
+           console.log(user.creditcards)
          })
-         .catch(e => user.messages=[])
+         .catch(e => user.creditcards=[])
       return user
     })
     return users
@@ -19,17 +19,17 @@ export async function findAll() {
 export async function findById(userId) {
   return await db.query(`SELECT * FROM users WHERE users.id = $1`,[userId])
   .then(async res => {
-    let messages = []
-       await db.query(`SELECT * FROM messages WHERE messages.userid = $1`,[userId])
+    let creditcards = []
+       await db.query(`SELECT * FROM creditcards WHERE creditcards.userid = $1`,[userId])
         .then(res => {
-          messages = res.rows
+          creditcards = res.rows
         })
         .catch(e => {
           console.error(e.stack)
-          return messages=[]
+          return creditcards=[]
           })
 
-      let user = {username: res.rows[0].username, id: res.rows[0].id, messages: messages }
+      let user = {username: res.rows[0].username, id: res.rows[0].id, creditcards: creditcards }
       return user
   })
   .catch(e => console.error(e.stack));

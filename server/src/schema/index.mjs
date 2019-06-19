@@ -1,5 +1,5 @@
 import userSchema from './user.mjs';
-import messageSchema from './message.mjs';
+import creditcardschema from './creditcard.mjs';
 
 const linkSchema = `
   type Query {
@@ -15,4 +15,4 @@ const linkSchema = `
   }
 `;
 
-export default [linkSchema, userSchema, messageSchema];
+export default [linkSchema, userSchema, creditcardschema];
