@@ -1,8 +1,10 @@
 import { connect } from 'mqtt'
 
+const interval = 3000;
 interface Tx {
   id: string,
   cardnumber: string,
+  amount?: number,
   timestamp?: number
 }
 
@@ -18,8 +20,8 @@ const client = connect('mqtt://mqtt');
 client.on('connect', function () {
   setInterval(function(){ 
     let tx:Tx = txs[Math.floor(Math.random()*txs.length)]
-    tx.timestamp= Date.now()
-    console.log('message emitted: ' + JSON.stringify(tx))
+    tx.timestamp = Date.now()
+    tx.amount = Math.floor(Math.random()*1000)
     client.publish('CCtransaction', JSON.stringify(tx)) 
-  }, 3000);
+  }, interval);
 })
