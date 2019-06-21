@@ -5,28 +5,27 @@ export default {
     creditcards: (parent, args, { models }) => {
       return models.creditcards.findAll();
     },
-    creditcard: (parent, { id }, { models }) => {
-      return models.creditcards.findById(id);
+    creditcard: (parent, { cardid }, { models }) => {
+      return models.creditcards.findById(cardid);
     },
   },
 
   Mutation: {
     createCreditcard: async (parent, { userid, cardnumber }, { models }) => {
-      const id = uuidv4();
+      const cardid = uuidv4();
       const creditcard = {
-        id,
+        cardid,
         cardnumber,
         userid,
       };
-      console.log(creditcard)
       await (models.creditcards).createCreditcard(creditcard);
       return creditcard;
     },
-    updateCreditcard: async (parent, { id, cardnumber }, { models }) => {
-      return await (models.creditcards).updateCreditcard(id, cardnumber);
+    updateCreditcard: async (parent, { cardid, cardnumber }, { models }) => {
+      return await (models.creditcards).updateCreditcard(cardid, cardnumber);
     },
-    deleteCreditcard: async (parent, { id }, { models }) => {
-      return await (models.creditcards).deleteCreditcard(id);
+    deleteCreditcard: async (parent, { cardid }, { models }) => {
+      return await (models.creditcards).deleteCreditcard(cardid);
     },
   },
 }

@@ -15,7 +15,7 @@ const queryText1 =
 const queryText2 =
   `CREATE TABLE IF NOT EXISTS
     creditcards(
-      id VARCHAR(40) PRIMARY KEY,
+      cardid VARCHAR(40) PRIMARY KEY,
       cardnumber VARCHAR(128),
       userid VARCHAR(40) REFERENCES users(id) ON DELETE CASCADE
     )`;
