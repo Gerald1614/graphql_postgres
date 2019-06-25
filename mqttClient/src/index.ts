@@ -19,9 +19,7 @@ let cards = fetch('http://app:3000/graphql', {
   .then(res => res.json())
   .then(res => {
     txs = res.data.creditcards.map(card => {
-      return {'cardnumber': card.cardnumber}} )
-    console.log(txs)
-    res.data
+      return {'cardnumber': card.cardnumber, 'cardid': card.cardid}} )
   })
   .catch(err => console.log(err));
 // let txs = [

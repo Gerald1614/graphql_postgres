@@ -1,4 +1,6 @@
 import connect from './utils/mqtt.cjs'
+import models from './models/index.mjs'
+
 export let transactions = []
 export function txprocessing (){
     const client = connect('mqtt://mqtt');
@@ -28,10 +30,13 @@ function checkFraud() {
     const analyzedSet = transactions.filter(transaction => transaction.timestamp >= evalPeriod);
     console.log(analyzedSet)
     const fraud = analyzedSet.filter((tx, index, arr) => { 
-        return arr.map(mapObj => mapObj.cardnumber).indexOf(tx.cardnumber) !== index;
+        return arr.map(mapObj => mapObj.cardid).indexOf(tx.cardid) !== index;
     })
 
-     if (fraud.length >0) {
-         fraud.every( card =>  console.log(`FRAUD ALERT: on card ${card.cardnumber}`) )
+     if (fraud.length > 0) {
+         fraud.every( async (fraudTx) => {
+            const fraudCard = await models.creditcards.findById(fraudTx.cardid)
+            console.log(`FRAUD ALERT: Contact ${fraudCard.userid.username} on card ${fraudCard.cardnumber}`)
+            } )
     }
 }
