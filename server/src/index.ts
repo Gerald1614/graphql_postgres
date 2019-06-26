@@ -1,10 +1,10 @@
 import express from 'express';
-import ApolloServer from './utils/ase.cjs';
+import { ApolloServer } from 'apollo-server-express';
 import cors from 'cors';
-import schema from './schema/index.mjs';
-import resolvers from './resolvers/index.mjs';
-import models from './models/index.mjs'
-import {txprocessing} from './txprocessing.mjs'
+import schema from './schema/index';
+import resolvers from './resolvers/index';
+import models from './models/index'
+import {txprocessing} from './txprocessing'
 
 const app = express();
 app.use(cors());

@@ -1,5 +1,5 @@
-import userSchema from './user.mjs';
-import creditcardschema from './creditcard.mjs';
+import userSchema from './user';
+import creditcardschema from './creditcard';
 
 const linkSchema = `
   type Query {

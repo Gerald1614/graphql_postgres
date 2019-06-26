@@ -1,4 +1,4 @@
-import db from '../db/index.mjs'
+import db from '../db/index'
 
 export async function findAll() {
   return await db.query('SELECT * FROM users')
