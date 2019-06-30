@@ -15,7 +15,7 @@ export function txprocessing (){
     
     client.on('message', function (topic, message) {
         if (topic ==='CCtransaction') {
-            let msg = JSON.parse(message)
+            let msg = JSON.parse(message.toString())
             transactions.push(msg)
             let d = new Date(msg.timestamp)
             console.log(`#server received: withdrawal of ${msg.amount} with ${msg.cardnumber} on ${d}`)

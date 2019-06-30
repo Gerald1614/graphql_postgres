@@ -1,4 +1,6 @@
-export default `
+import { gql } from 'apollo-server';
+
+const userSchema = gql`
   extend type Query {
     users: [User!]
     user(id: ID!): User
@@ -13,4 +15,5 @@ export default `
     username: String!
     creditcards: [Creditcard!]
   }
-`;
+  `
+  export default userSchema;

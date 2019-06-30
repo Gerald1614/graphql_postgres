@@ -1,4 +1,6 @@
-export default `
+import {	gql } from "apollo-server";
+
+const creditcardSchema = gql`
   extend type Query {
    creditcards: [Creditcard!]!
    creditcard(cardid: ID!): Creditcard!
@@ -15,4 +17,5 @@ export default `
     cardnumber: String!
     userid: User!
   }
-  `;
+  `
+export default creditcardSchema;

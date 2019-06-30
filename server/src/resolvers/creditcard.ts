@@ -1,6 +1,6 @@
 import uuidv4 from 'uuid/v4.js';
-
-export default {
+import { IResolvers } from 'graphql-tools';
+const creditcardResolvers: IResolvers = {
   Query: {
     creditcards: (parent, args, { models }) => {
       return models.creditcards.findAll();
@@ -29,3 +29,4 @@ export default {
     },
   },
 }
+export default creditcardResolvers;

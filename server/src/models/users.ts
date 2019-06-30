@@ -1,10 +1,10 @@
 import db from '../db/index'
 
 export async function findAll() {
-  return await db.query('SELECT * FROM users')
+  return await db.query('SELECT * FROM users', '', '')
   .then(res => {
     const users =  res.rows.map(async (user) => {
-        await db.query(`SELECT * FROM creditcards WHERE creditcards.userid = $1`,[user.id])
+        await db.query(`SELECT * FROM creditcards WHERE creditcards.userid = $1`,[user.id] , '')
          .then(res => {
            user.creditcards = res.rows
            console.log(user.creditcards)
@@ -17,10 +17,10 @@ export async function findAll() {
   .catch(e => console.error(e.stack));
 }
 export async function findById(userId) {
-  return await db.query(`SELECT * FROM users WHERE users.id = $1`,[userId])
+  return await db.query(`SELECT * FROM users WHERE users.id = $1`,[userId], '')
   .then(async res => {
     let creditcards = []
-       await db.query(`SELECT * FROM creditcards WHERE creditcards.userid = $1`,[userId])
+       await db.query(`SELECT * FROM creditcards WHERE creditcards.userid = $1`,[userId], '')
         .then(res => {
           creditcards = res.rows
         })
@@ -40,7 +40,7 @@ export async function createUser(user) {
     text: 'INSERT INTO users("id", "username") VALUES($1, $2) RETURNING *',
     values: [user.id, user.username],
   }
-  return await db.query(query)
+  return await db.query(query, '', '')
   .then(res => {
     console.log(res)
     return res.rows[0]
@@ -49,7 +49,7 @@ export async function createUser(user) {
 }
 
 export async function deleteUser(userId) {
-  return await db.query('DELETE FROM users WHERE users.id=$1', [userId])
+  return await db.query('DELETE FROM users WHERE users.id=$1', [userId], '')
   .then(res => {
     return true
   } )

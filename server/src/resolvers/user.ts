@@ -1,6 +1,6 @@
 import uuidv4 from 'uuid/v4.js';
-
-export default {
+import { IResolvers } from 'graphql-tools';
+const userResolvers: IResolvers = {
   Query: {
     users: (parent, args, { models }) => {
       return models.users.findAll();
@@ -28,3 +28,4 @@ export default {
   }
 
 }
+export default userResolvers;
