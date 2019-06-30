@@ -7,7 +7,6 @@ export async function findAll() {
         await db.query(`SELECT * FROM creditcards WHERE creditcards.userid = $1`,[user.id] , '')
          .then(res => {
            user.creditcards = res.rows
-           console.log(user.creditcards)
          })
          .catch(e => user.creditcards=[])
       return user
@@ -42,7 +41,6 @@ export async function createUser(user) {
   }
   return await db.query(query, '', '')
   .then(res => {
-    console.log(res)
     return res.rows[0]
   } )
   .catch(e => console.error(e.stack))

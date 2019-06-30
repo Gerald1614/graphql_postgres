@@ -13,7 +13,6 @@ export async function findAll() {
   ON users.id = creditcards.userid`, '', '' )
   .then(res => {
     const result=[]
-    console.log(res.rows);
     let creditcard: Creditcard;
     for (creditcard of Object.values(res.rows)) {
       result.push({cardid: creditcard.cardid, cardnumber: creditcard.cardnumber, userid: { id: creditcard.userid, username: creditcard.username}})
@@ -31,11 +30,9 @@ export async function findById(creditcardId) {
   FROM creditcards JOIN users
   ON users.id = creditcards.userid`, '','' )
   .then(res => {
-    console.log(res)
       const result =  res.rows.find((el) => {
         return el.cardid === creditcardId
       }) 
-      console.log(result)
       return {cardid: result.cardid, cardnumber: result.cardnumber, userid: { id: result.userid, username: result.username}}
   })
   .catch(e => console.error(e.stack));

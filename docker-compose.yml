@@ -24,8 +24,10 @@ services:
     build: ./mqttClient
     depends_on:
       - mqtt
+      - app
     links:
       - mqtt
+      - app
     ports:
       - "5000:5000"
 

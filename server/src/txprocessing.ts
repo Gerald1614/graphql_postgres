@@ -28,15 +28,15 @@ function checkFraud() {
     let timeDuration = 10;
     let evalPeriod = transactions[transactions.length-1].timestamp - timeDuration*1000;
     const analyzedSet = transactions.filter(transaction => transaction.timestamp >= evalPeriod);
-    console.log(analyzedSet)
     const fraud = analyzedSet.filter((tx, index, arr) => { 
         return arr.map(mapObj => mapObj.cardid).indexOf(tx.cardid) !== index;
     })
 
      if (fraud.length > 0) {
          fraud.every( async (fraudTx) => {
-            const fraudCard = await models.creditcards.findById(fraudTx.cardid)
-            console.log(`FRAUD ALERT: Contact ${fraudCard.userid.username} on card ${fraudCard.cardnumber}`)
+            console.log(`#FRAUD ALERT on cardid - ${fraudTx.cardid} cardnumber : ${fraudTx.cardnumber} ` )
+             const fraudCard = await models.creditcards.findById(fraudTx.cardid)
+             console.log(`#CONTACT ${fraudCard.userid.username}`)
             } )
     }
 }
