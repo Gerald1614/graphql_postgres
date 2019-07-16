@@ -1,9 +1,18 @@
 import { connect } from 'mqtt'
 import models from './models/index'
 
-export let transactions = []
+interface Transaction {
+    id?: string,
+    cardnumber: string,
+    cardid: string,
+    amount?: number,
+    timestamp?: number
+  }
+  interface Transactions extends Array<Transaction>{}
+
 export function txprocessing (){
     const client = connect('mqtt://mqtt');
+    let transactions:Transactions = []
 
     client.on('connect', function () {
         client.subscribe('CCtransaction', function (err) {
@@ -20,10 +29,10 @@ export function txprocessing (){
             let d = new Date(msg.timestamp)
             console.log(`#server received: withdrawal of ${msg.amount} with ${msg.cardnumber} on ${d}`)
         }
-        checkFraud()
+        checkFraud(transactions)
     })
 } 
-function checkFraud() {
+export function checkFraud(transactions: Transactions) {
     // timeDuration in seconds
     let timeDuration = 10;
     let evalPeriod = transactions[transactions.length-1].timestamp - timeDuration*1000;
@@ -37,6 +46,8 @@ function checkFraud() {
             console.log(`#FRAUD ALERT on cardid - ${fraudTx.cardid} cardnumber : ${fraudTx.cardnumber} ` )
              const fraudCard = await models.creditcards.findById(fraudTx.cardid)
              console.log(`#CONTACT ${fraudCard.userid.username}`)
+             return fraudCard
             } )
     }
+    return 'noFraud'
 }
