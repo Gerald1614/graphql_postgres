@@ -10,3 +10,4 @@ docker-compose -f docker-compose.yml up --build
 to reset postgres
 docker-compose rm postgres
 ```
+a branch called 'all typescript' is a typescript verison of the application with some tests added. to test the API without mocking, I built a 4th container that run the test againt the application. 
