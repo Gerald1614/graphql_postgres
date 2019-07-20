@@ -27,35 +27,41 @@ interface Tx {
         .catch(err => console.log(err));
   }
 
-// let txFraud = generateTx([cards[0], cards[1], cards[0]])
 
-function generateTx(tx) {
-    for (let i=0; i>=2; i++) {
-        tx[i].timestamp = Date.now()
-        tx[i].id = uuidv4()
-        tx[i].amount = Math.floor(Math.random()*1000)
-    }
-    console.log(tx)
-    return tx
+function generateTx(txs:Txs) {
+  const element = { 
+    "timestamp": Date.now(),
+    "id": uuidv4(),
+    "amount": Math.floor(Math.random()*1000)
+  }
+  return txs.map((tx:Tx) => Object.assign(tx, element) )
 }
 
 
-test('getCards', async () => {
-  const desiredCards = {"cardid": "a57f40df-d811-4ff9-927e-509e978009aa", "cardnumber": "564-978-4546"}
-    const cards = await getCards();
-    expect(cards).toContainEqual(desiredCards);
+
+
+describe('Test api and check transactions', () =>{
+  let cards = []
+  beforeAll( async() => {
+    cards = await getCards();
+  });
+
+  it('getCards', async () => {
+    const desiredCards = {"cardid": "a57f40df-d811-4ff9-927e-509e978009aa", "cardnumber": "564-978-4546"}
+      expect(cards).toContainEqual(desiredCards);
+  });
+
+  it('checkFraud on non fraudulent transactions', async() => {
+    let txNoFraud = generateTx(cards)
+    const result = await checkFraud(txNoFraud)
+    expect(result).toBe('noFraud');
+  });
+
+  it('checkFraud on fraudulent transactions', async() => {
+    let txs = [cards[0], cards[1], cards[0]]
+    let txFraud = await generateTx(txs)
+    const result = await checkFraud(txFraud)
+    expect(result).toBe(true);
+  });
+
 });
-
-test('checkFraud on non fraudulent transactions', async() => {
-  let cards = await getCards()
-  let txNoFraud = await generateTx(cards)
-  const result = await checkFraud(txNoFraud)
-  expect(result).toBe('noFraud');
-
-});
-
-// test('checkFraud on fraudulent transactions', async() => {
-//   jest.setTimeout(10000);
-//   const result = await checkFraud(txFraud)
-//   expect(result).toContain('username');
-// });
