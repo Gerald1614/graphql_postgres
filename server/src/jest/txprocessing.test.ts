@@ -46,11 +46,6 @@ describe('Test api and check transactions', () =>{
     cards = await getCards();
   });
 
-  it('getCards', async () => {
-    const desiredCards = {"cardid": "a57f40df-d811-4ff9-927e-509e978009aa", "cardnumber": "564-978-4546"}
-      expect(cards).toContainEqual(desiredCards);
-  });
-
   it('checkFraud on non fraudulent transactions', async() => {
     let txNoFraud = generateTx(cards)
     const result = await checkFraud(txNoFraud)

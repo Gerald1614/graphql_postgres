@@ -31,7 +31,7 @@ services:
     environment:
       POSTGRES_PASSWORD: gegeraptor
       POSTGRES_USER: gegeraptor
-      POSTGRES_DB: graphql-node
+      POSTGRES_DB: graphql_node
     # volumes:
     #   - ~/dbdata:/var/lib/postgresql/data
 

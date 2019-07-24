@@ -36,9 +36,11 @@ services:
     environment:
       POSTGRES_PASSWORD: gegeraptor
       POSTGRES_USER: gegeraptor
-      POSTGRES_DB: graphql-node
-    # volumes:
-    #   - ~/dbdata:/var/lib/postgresql/data
+      POSTGRES_DB: graphql_node
+    volumes:
+      # - ~/dbdata:/var/lib/postgresql/data
+      - $PWD/server/src/utils/2_initUsers.sql:/docker-entrypoint-initdb.d/2_initUsers.sql
+      - $PWD/server/src/utils/3_initCc.sql:/docker-entrypoint-initdb.d/3_initCc.sql
 
   mqtt:
     image: eclipse-mosquitto:latest

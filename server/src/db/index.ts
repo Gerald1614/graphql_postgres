@@ -6,20 +6,15 @@ pool.on('connect', () => {
   console.log('connected to the Database');
 });
 
-const queryText1 =
-  `CREATE TABLE IF NOT EXISTS
-    users(
-      id VARCHAR(40) PRIMARY KEY,
-      username VARCHAR(40)
-    )`;
-const queryText2 =
-  `CREATE TABLE IF NOT EXISTS
-    creditcards(
-      cardid VARCHAR(40) PRIMARY KEY,
-      cardnumber VARCHAR(128),
-      userid VARCHAR(40) REFERENCES users(id) ON DELETE CASCADE
-    )`;
-const createTables = (query) => {
+const queryText3 = 
+`COPY users
+FROM './utils/initiateDBusers' DELIMITER ',' CSV HEADER;`;
+
+const queryText4 = 
+`COPY creditcards
+FROM './utils/initiateDBcc' DELIMITER ',' CSV HEADER;`;
+
+const executeQuery = (query) => {
   pool.query(query)
     .then((res) => {
       console.log('tables created');
@@ -29,8 +24,8 @@ const createTables = (query) => {
     });
 }
 
-createTables(queryText1);
-createTables(queryText2);
+// executeQuery(queryText3);
+// executeQuery(queryText4);
 
 export default {
   query: (text, params, callback) => {
