@@ -1,6 +1,7 @@
 import fetch from 'node-fetch'
 import uuidv4 from 'uuid/v4.js';
 import { checkFraud } from '../txprocessing';
+import { tsBooleanKeyword } from '@babel/types';
 
 interface Tx {
     id?: string,
@@ -44,6 +45,9 @@ describe('Test api and check transactions', () =>{
   let cards = []
   beforeAll( async() => {
     cards = await getCards();
+  });
+  it('validate access to API - fetch cards', async() => {
+    expect(cards.length).toBe(5)
   });
 
   it('checkFraud on non fraudulent transactions', async() => {

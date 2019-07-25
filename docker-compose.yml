@@ -41,6 +41,8 @@ services:
       # - ~/dbdata:/var/lib/postgresql/data
       - $PWD/server/src/utils/2_initUsers.sql:/docker-entrypoint-initdb.d/2_initUsers.sql
       - $PWD/server/src/utils/3_initCc.sql:/docker-entrypoint-initdb.d/3_initCc.sql
+      - $PWD/server/src/utils/4_dataUsers.sql:/docker-entrypoint-initdb.d/4_dataUsers.sql
+      - $PWD/server/src/utils/5_dataCc.sql:/docker-entrypoint-initdb.d/5_dataCc.sql
 
   mqtt:
     image: eclipse-mosquitto:latest
