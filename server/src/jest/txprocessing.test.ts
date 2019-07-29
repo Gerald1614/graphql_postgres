@@ -60,7 +60,7 @@ describe('Test api and check transactions', () =>{
     let txs = [cards[0], cards[1], cards[0]]
     let txFraud = await generateTx(txs)
     const result = await checkFraud(txFraud)
-    expect(result).toBe(true);
+    expect(result[0]).toHaveProperty('cardnumber');
   });
 
 });

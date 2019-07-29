@@ -30,6 +30,19 @@ export function txprocessing (){
             console.log(`#server received: withdrawal of ${msg.amount} with ${msg.cardnumber} on ${d}`)
         }
         checkFraud(transactions)
+            .then((status) => {
+                if(status ==='noFraud') {
+                    console.log('No fraud hourray!')
+                } else {
+                    for(let frauded of status) {
+                        console.log(`#FRAUD ALERT on cardnumber : ${frauded.cardnumber} Contact ${frauded.userid.username}` )
+                    }
+
+                }
+        })
+        .catch((e) =>
+          console.log(e)
+        );
     })
 } 
 export async function checkFraud(transactions: Transactions) {
@@ -40,17 +53,15 @@ export async function checkFraud(transactions: Transactions) {
     const fraud = analyzedSet.filter((tx, index, arr) => { 
         return arr.map(mapObj => mapObj.cardid).indexOf(tx.cardid) !== index;
     })
-
      if (fraud.length > 0) {
-         return await fraud.every( async (fraudTx) => {
-            console.log(`#FRAUD ALERT on cardid - ${fraudTx.cardid} cardnumber : ${fraudTx.cardnumber} ` )
-             const fraudCard = await models.creditcards.findById(fraudTx.cardid)
-             console.log(`#CONTACT ${fraudCard.userid.username}`)
-             return fraudCard
-            } )
+         let frauded = await Promise.all(fraud.map( async (fraudTx) => {
+             return await models.creditcards.findById(fraudTx.cardid)
+            } ))
+                return await Promise.resolve(frauded)
+
+
     } else {
-        console.log('no fraud')
-        return 'noFraud'
+        return await Promise.resolve("noFraud")
     }
 
 }
