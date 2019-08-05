@@ -1,6 +1,5 @@
 import express from 'express';
 import { ApolloServer, makeExecutableSchema} from 'apollo-server-express';
-import { GraphQLSchema } from 'graphql'
 import cors from 'cors';
 import typeDefs from './schemas/index';
 import resolvers from './resolvers/index';

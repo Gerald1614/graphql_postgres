@@ -11,7 +11,7 @@ interface Transaction {
   interface Transactions extends Array<Transaction>{}
 
 export function txprocessing (){
-    const client = connect('mqtt://mqtt');
+    const client = connect('mqtt://mqtt_server');
     let transactions:Transactions = []
 
     client.on('connect', function () {
@@ -27,18 +27,18 @@ export function txprocessing (){
             let msg = JSON.parse(message.toString())
             transactions.push(msg)
             let d = new Date(msg.timestamp)
-            console.log(`#server received: withdrawal of ${msg.amount} with ${msg.cardnumber} on ${d}`)
+            client.publish('newTransaction', JSON.stringify(`#server received: withdrawal of ${msg.amount} with ${msg.cardnumber} on ${d}`)) 
+            // console.log(`#server received: withdrawal of ${msg.amount} with ${msg.cardnumber} on ${d}`)
         }
+        let alert = 'No fraud hourray!'
         checkFraud(transactions)
             .then((status) => {
-                if(status ==='noFraud') {
-                    console.log('No fraud hourray!')
-                } else {
+                if(status !='noFraud') {
                     for(let frauded of status) {
-                        console.log(`#FRAUD ALERT on cardnumber : ${frauded.cardnumber} Contact ${frauded.userid.username}` )
+                         alert = `#FRAUD ALERT on cardnumber : ${frauded['card'].cardnumber} Contact ${frauded['card'].userid.username} to check withdrawal amount of $${frauded['transaction'].amount} on ${new Date(frauded['transaction'].timestamp)}`
                     }
-
                 }
+                 client.publish('fraudCheck', JSON.stringify(alert))
         })
         .catch((e) =>
           console.log(e)
@@ -55,8 +55,9 @@ export async function checkFraud(transactions: Transactions) {
     })
      if (fraud.length > 0) {
          let frauded = await Promise.all(fraud.map( async (fraudTx) => {
-             return await models.creditcards.findById(fraudTx.cardid)
+             return  {card: await models.creditcards.findById(fraudTx.cardid), transaction:fraudTx}
             } ))
+
                 return await Promise.resolve(frauded)
 
 

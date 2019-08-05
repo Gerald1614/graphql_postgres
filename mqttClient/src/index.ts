@@ -23,18 +23,18 @@ setTimeout(() => {
     })
     .catch(err => console.log(err));
 
-    const client = connect('mqtt://mqtt');
-client.on('connect', () => {
-  setInterval( async () => { 
-    let tx:Tx = await cards[Math.floor(Math.random()*cards.length)]
-    tx.timestamp = Date.now()
-    tx.id = uuidv4()
-    tx.amount = Math.floor(Math.random()*1000)
-    client.publish('CCtransaction', JSON.stringify(tx)) 
-  }, interval);
-})
+    const client = connect('mqtt://mqtt_server');
+    client.on('connect', () => {
+      setInterval( async () => { 
+        let tx:Tx = await cards[Math.floor(Math.random()*cards.length)]
+        tx.timestamp = Date.now()
+        tx.id = uuidv4()
+        tx.amount = Math.floor(Math.random()*1000)
+        client.publish('CCtransaction', JSON.stringify(tx)) 
+      }, interval);
+    })
 
-}, 5000)
+}, 10000)
 
 
 

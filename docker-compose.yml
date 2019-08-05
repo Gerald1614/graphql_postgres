@@ -32,6 +32,7 @@ services:
       - "5000:5000"
 
   postgres:
+    container_name: postgres
     image: postgres:11.2-alpine
     environment:
       POSTGRES_PASSWORD: gegeraptor
@@ -45,6 +46,7 @@ services:
       - $PWD/server/src/utils/5_dataCc.sql:/docker-entrypoint-initdb.d/5_dataCc.sql
 
   mqtt:
+    container_name: mqtt_server
     image: eclipse-mosquitto:latest
     restart: always
     ports:

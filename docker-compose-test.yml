@@ -27,6 +27,7 @@ services:
 
 
   postgres:
+    container_name: postgres
     image: postgres:11.2-alpine
     environment:
       POSTGRES_PASSWORD: gegeraptor
@@ -41,6 +42,7 @@ services:
 
   mqtt:
     image: eclipse-mosquitto:latest
+    container_name: mqtt_server
     restart: always
     ports:
       - "1883:1883"

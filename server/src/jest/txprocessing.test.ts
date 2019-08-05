@@ -1,7 +1,6 @@
 import fetch from 'node-fetch'
 import uuidv4 from 'uuid/v4.js';
 import { checkFraud } from '../txprocessing';
-import { tsBooleanKeyword } from '@babel/types';
 
 interface Tx {
     id?: string,
@@ -14,7 +13,6 @@ interface Tx {
   interface Txs extends Array<Tx>{}
 
   async function getCards() {
-    console.log('getcards initiated')
     return await fetch('http://app:3000/graphql', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
